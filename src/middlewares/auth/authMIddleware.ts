@@ -2,6 +2,7 @@ import { verify } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
 import { secret } from '../../config/auth';
+import { DefaultError } from '../../errors';
 
 interface TokenPayload {
   userId: string;
@@ -15,18 +16,16 @@ export function authMiddleware(
   const { authorization } = req.headers;
 
   if (!authorization) {
-    throw new Error('Token not provided');
+    throw new DefaultError('Token not provided', 401);
   }
 
   const [, token] = authorization.split(' ');
 
-  try {
-    const decoded = verify(token, secret) as TokenPayload;
-    if (decoded) {
-      req.userId = decoded.userId;
-    }
-    return next();
-  } catch (error) {
-    throw new Error('Invalid token');
+  const decoded = verify(token, secret) as TokenPayload;
+
+  if (decoded) {
+    req.userId = decoded.userId;
   }
+
+  return next();
 }

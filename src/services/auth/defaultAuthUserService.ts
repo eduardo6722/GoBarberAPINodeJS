@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 
+import { DefaultError } from '../../errors';
 import { User } from '../../models';
 import { secret, expiresIn } from '../../config/auth';
 
@@ -16,7 +17,7 @@ interface AuthResponse {
 
 export class DefaultAuthUserService {
   private throwInvalidCredentialsError(): void {
-    throw new Error('Invalid credentials');
+    throw new DefaultError('Invalid credentials', 401);
   }
 
   public async execute({

@@ -7,22 +7,18 @@ import { AppointmentRepository } from '../repositories';
 
 export class AppointmentsController {
   static async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const { provider_id, date } = req.body;
+    const { provider_id, date } = req.body;
 
-      const parsedDate = parseISO(date);
+    const parsedDate = parseISO(date);
 
-      const createAppointmentService = new CreateAppoitmentService();
+    const createAppointmentService = new CreateAppoitmentService();
 
-      const appointment = await createAppointmentService.execute({
-        date: parsedDate,
-        provider_id,
-      });
+    const appointment = await createAppointmentService.execute({
+      date: parsedDate,
+      provider_id,
+    });
 
-      return res.status(201).json(appointment);
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+    return res.status(201).json(appointment);
   }
 
   static async get(req: Request, res: Response): Promise<Response> {

@@ -1,11 +1,11 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './User';
 
@@ -15,7 +15,6 @@ export class Appointment {
   id?: string;
 
   @Column()
-  // eslint-disable-next-line camelcase
   provider_id: string;
 
   @Column('timestamp with time zone')
@@ -26,10 +25,8 @@ export class Appointment {
   provider: User;
 
   @CreateDateColumn()
-  // eslint-disable-next-line camelcase
   created_at: Date;
 
   @UpdateDateColumn()
-  // eslint-disable-next-line camelcase
   updated_at: Date;
 }
