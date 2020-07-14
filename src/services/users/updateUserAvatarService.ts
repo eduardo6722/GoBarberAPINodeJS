@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import { getRepository } from 'typeorm';
 
 import { User } from '../../models';
 import { DefaultError } from '../../errors';
@@ -16,9 +15,7 @@ export class UpdateUserAvatarService {
     user_id,
     avatarFilename,
   }: UpdateAvatarRequest): Promise<void> {
-    const userRepository = getRepository(User);
-
-    const user = await userRepository.findOne(user_id);
+    const user = await User.findOne(user_id);
 
     if (!user) {
       throw new DefaultError('Cannot find user', 404);
@@ -39,6 +36,6 @@ export class UpdateUserAvatarService {
 
     user.avatar = avatarFilename;
 
-    await userRepository.save(user);
+    await User.save(user);
   }
 }

@@ -1,5 +1,4 @@
 import { hash } from 'bcryptjs';
-import { getRepository } from 'typeorm';
 
 import { User } from '../../models';
 import { DefaultError } from '../../errors';
@@ -16,9 +15,7 @@ export class CreateUserService {
     email,
     password,
   }: CreateUserRequest): Promise<User> {
-    const userRepository = getRepository(User);
-
-    const foundUser = await userRepository.findOne({
+    const foundUser = await User.findOne({
       where: { email },
     });
 
@@ -28,13 +25,13 @@ export class CreateUserService {
 
     const passwordHash = await hash(password, 8);
 
-    const user = userRepository.create({
+    const user = User.create({
       name,
       email,
       password: passwordHash,
     });
 
-    await userRepository.save(user);
+    await User.save(user);
 
     delete user.password;
     return user;

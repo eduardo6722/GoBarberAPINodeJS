@@ -8,7 +8,7 @@ export default {
   tempFolder,
   storage: multer.diskStorage({
     destination: tempFolder,
-    filename(req, file, callback) {
+    filename(_, file, callback) {
       const filehash = crypto.randomBytes(10).toString('hex');
       const filename = `${filehash}-${file.originalname}`;
       return callback(null, filename);

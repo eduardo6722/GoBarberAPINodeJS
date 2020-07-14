@@ -6,11 +6,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn,
+  BaseEntity,
 } from 'typeorm';
 import { User } from './User';
 
 @Entity('appointments')
-export class Appointment {
+export class Appointment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id?: string;
 

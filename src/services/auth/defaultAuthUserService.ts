@@ -24,9 +24,7 @@ export class DefaultAuthUserService {
     email,
     password,
   }: DefaultAuthRequest): Promise<AuthResponse> {
-    const usersRepository = getRepository(User);
-
-    const user = (await usersRepository.findOne({ where: { email } })) as User;
+    const user = (await User.findOne({ where: { email } })) as User;
 
     if (!user) {
       this.throwInvalidCredentialsError();
